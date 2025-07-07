@@ -1,0 +1,94 @@
+<h2>Consultar Cobertura</h2>
+
+<mat-button-toggle-group [(ngModel)]="tipoConsulta">
+  <mat-button-toggle value="zona">Zona</mat-button-toggle>
+  <mat-button-toggle value="ciudad">Ciudad</mat-button-toggle>
+  <mat-button-toggle value="depto">Departamento</mat-button-toggle>
+</mat-button-toggle-group>
+
+<form [formGroup]="coberturaForm" (ngSubmit)="buscarCobertura()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Id {{ tipoConsulta | titlecase }}</mat-label>
+    <input matInput formControlName="id" type="number" placeholder="Id">
+  </mat-form-field>
+
+  <h3>Productos</h3>
+
+  <div formArrayName="productos">
+    <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="producto-item">
+      <mat-form-field appearance="fill">
+        <mat-label>SKU</mat-label>
+        <input matInput formControlName="sku">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" formControlName="cantidad">
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <button mat-raised-button type="button" color="primary" (click)="agregarProducto()">Agregar Producto</button>
+
+  <div style="margin-top: 20px;">
+    <button mat-raised-button type="submit" color="accent">Consultar Cobertura</button>
+  </div>
+</form>
+
+<hr>
+
+<h3>Resultados:</h3>
+
+<table mat-table [dataSource]="resultadoCobertura" class="mat-elevation-z8" *ngIf="resultadoCobertura.length > 0">
+
+  <ng-container matColumnDef="idZona">
+    <th mat-header-cell *matHeaderCellDef> Zona </th>
+    <td mat-cell *matCellDef="let c"> {{ c.idZona }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="idCiudad">
+    <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+    <td mat-cell *matCellDef="let c"> {{ c.idCiudad }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="idDepto">
+    <th mat-header-cell *matHeaderCellDef> Depto </th>
+    <td mat-cell *matCellDef="let c"> {{ c.idDepto }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="promesa">
+    <th mat-header-cell *matHeaderCellDef> Promesa </th>
+    <td mat-cell *matCellDef="let c"> {{ c.promesa }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="idPromesaCliente">
+    <th mat-header-cell *matHeaderCellDef> Id Promesa </th>
+    <td mat-cell *matCellDef="let c"> {{ c.idPromesaCliente }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="idRedZona">
+    <th mat-header-cell *matHeaderCellDef> Id Red Zona </th>
+    <td mat-cell *matCellDef="let c"> {{ c.idRedZona || '-' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="productos">
+    <th mat-header-cell *matHeaderCellDef> Productos </th>
+    <td mat-cell *matCellDef="let c">
+      <ul>
+        <li *ngFor="let p of c.productos">
+          SKU: {{ p.prdLvlNumber }} | Cantidad: {{ p.cantidadSku }} | Sigla: {{ p.sigla }}
+        </li>
+      </ul>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['idZona', 'idCiudad', 'idDepto', 'promesa', 'idPromesaCliente', 'idRedZona', 'productos']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['idZona', 'idCiudad', 'idDepto', 'promesa', 'idPromesaCliente', 'idRedZona', 'productos'];"></tr>
+
+</table>
+

@@ -1,0 +1,16 @@
+.pedido-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+}
+
+.producto-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.submit-section {
+  margin-top: 20px;
+}

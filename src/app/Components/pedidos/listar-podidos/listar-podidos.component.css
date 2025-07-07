@@ -1,0 +1,19 @@
+.mat-column-idPedido {
+  width: 100px;
+}
+
+.mat-column-idCliente {
+  width: 120px;
+}
+
+.mat-column-estado {
+  width: 100px;
+}
+
+.mat-column-fechaEntrega {
+  width: 150px;
+}
+
+.mat-column-acciones {
+  width: 200px;
+}

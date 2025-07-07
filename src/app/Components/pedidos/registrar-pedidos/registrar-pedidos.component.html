@@ -1,0 +1,54 @@
+<h2>Registrar Pedido</h2>
+
+<form [formGroup]="pedidoForm" (ngSubmit)="registrarPedido()" class="pedido-form">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Id Cliente</mat-label>
+    <input matInput formControlName="idCliente" type="number" placeholder="Id Cliente">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Dirección de Entrega</mat-label>
+    <input matInput formControlName="direccionEntrega" placeholder="Dirección de entrega">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha de Entrega</mat-label>
+    <input matInput formControlName="fechaEntrega" type="date">
+  </mat-form-field>
+
+  <h3>Productos</h3>
+
+  <div formArrayName="productos">
+    <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i" class="producto-item">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Id Producto</mat-label>
+        <input matInput formControlName="idProducto" type="number" placeholder="Id Producto">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Cantidad</mat-label>
+        <input matInput formControlName="cantidad" type="number" placeholder="Cantidad">
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" type="button" (click)="eliminarProducto(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <button mat-raised-button color="primary" type="button" (click)="agregarProducto()">
+    Agregar Producto
+  </button>
+
+  <div class="submit-section">
+    <button mat-raised-button color="accent" type="submit">Registrar Pedido</button>
+  </div>
+
+</form>
+
+<mat-divider></mat-divider>
+
+<h4>Respuesta del servicio:</h4>
+<pre *ngIf="respuesta">{{ respuesta | json }}</pre>

@@ -1,0 +1,43 @@
+<h2>Listado de Pedidos</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Id Cliente</mat-label>
+  <input matInput type="number" [(ngModel)]="idCliente" placeholder="Ingrese ID del cliente">
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="buscarPedidos()">Buscar Pedidos</button>
+
+<div *ngIf="error" style="color:red; margin-top: 10px;">{{ error }}</div>
+
+<table mat-table [dataSource]="pedidos" class="mat-elevation-z8" *ngIf="pedidos.length > 0">
+
+  <ng-container matColumnDef="idPedido">
+    <th mat-header-cell *matHeaderCellDef> ID Pedido </th>
+    <td mat-cell *matCellDef="let p"> {{ p.idPedido }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="idCliente">
+    <th mat-header-cell *matHeaderCellDef> Cliente </th>
+    <td mat-cell *matCellDef="let p"> {{ p.idCliente }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef> Estado </th>
+    <td mat-cell *matCellDef="let p"> {{ p.idEstadoPedido }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fechaEntrega">
+    <th mat-header-cell *matHeaderCellDef> Fecha Entrega </th>
+    <td mat-cell *matCellDef="let p"> {{ p.fechaEntrega | date:'yyyy-MM-dd' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let p">
+      <button mat-button color="accent" (click)="cambiarEstado(p)">Cambiar Estado</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
